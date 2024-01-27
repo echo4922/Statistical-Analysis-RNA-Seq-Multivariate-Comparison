@@ -16,9 +16,9 @@ The following is the null hypothesis(H0) and the alternativ hypothesis (H1) for 
 H0=The centroids of the groups are equivalent for all groups. <br />
 H1=The centroids of the groups are NOT equivalent for all groups. <br />
 
-In other words, the observations are replaceable. The null hypothesis states that if the centroids of all groups are equal, then there are no statistical differences for all groups. 
+In other words, the observations are replaceable. The null hypothesis states that if the centroids of all groups are equal, then there are no statistical differences for all groups. perMANOVA was performed in two different ways: standard approach and CoDA. For the standard approach, the variance stabilizing transformation was applied for the data transformation. The variance stabilizing transformation is a way to transform data with heteroscedasticity to homoscedastic data. In statistics, homoscedasticity occurs when “standard deviations of a group are the same” (Source: Applied Statistics LibreTexts). On the other hand, heteroscedasticity occurs when “standard deviations are different from each other potentially leading to obtaining a false positive result” (Source: Applied Statistics LibreTexts). The multivariate comparison of the CoDA was performed with the centered-log ratio (CLR) transformation. One of the most commonly utilized data transformations is the centered log-ratio (CLR) transformation for the CoDA. It converts compositional data into real space and it is calculated within each sample (Source: original paper by Quinn et al). For this study, each sample is a gene. The transformation is computed based on log ratios of each feature divided by the geometric mean of all features in that particular gene. Because this process involves calculations between sample diversity, this is known as beta diversity or β-diversity. It measures the overall gene profiles of two conditions of control condition and treatment condition.
 
-
+The count matrix for the actual multivariate comparison includes 16,123 genomic features for perMANOVA multivariate comparison and an additional step of formatting data was needed according to the vegan library manual of R programming. The RNA-Seq count matrix is formatted such that the first column is gene ID then each column for replicates. To correctly format data, the count matrix was transposed. Once transposed, each row represents a replicate and each column shows gene ID. In addition, separate metadata was needed to perform the multivariate comparison according to the manual. The metadata gives detailed information about the RNA-Seq count matrix. Each column shows the sample (replicate) name and corresponding condition: control and treatment. The transposed data was used for the dependent variable while the condition was used for the independent variable.
 
 
 References: <br />
@@ -27,3 +27,6 @@ Paper by Fernandes et al: https://doi.org/10.1186/2049-2618-2-15 <br />
 Paper by  Hawinkel et al: https://doi.org/10.1371/journal.pone.0224909  <br />
 Paper by Anderson & Walsh: https://doi.org/10.1890/12-2010.1 <br />
 Applied Multivariate Statistics in R tutorial by University by Washington: https://uw.pressbooks.pub/appliedmultivariatestatistics/chapter/permanova/ <br />
+Applied Statistics LibreTexts: https://stats.libretexts.org/Bookshelves/Applied_Statistics/
+Biological_Statistics_(McDonald)/04%3A_Tests_for_One_Measurement_Variable/4.05%3A_Homoscedasticity_and_Heteroscedasticity <br />
+Paper by Quinn et al: https://doi.org/10.1093/bioinformatics/bty175
