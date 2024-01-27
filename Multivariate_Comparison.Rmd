@@ -1,0 +1,69 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+#Step 0: Load libraries/packages
+```{r setup, message = TRUE}
+
+library("ggplot2")
+library("vegan")
+library("parallel")
+```
+#Step 1: Remove loaded objects then verify working directory
+```{r}
+rm(list = ls())
+getwd()
+```
+
+#Step 2: Load data
+```{r}
+raw_count_data <- read.csv("TRANSFORMED_FEATURECOUNTS.csv" )
+```
+
+#Step 3: Display first six rows and dimension
+```{r}
+head(raw_count_data)
+dim(raw_count_data)
+```
+
+#Step 4: Transpose Data
+```{r}
+
+#transpose data
+dune_format_data <- t(raw_count_data)
+
+#reassign names of the rows
+rownames(dune_format_data) <- colnames(raw_count_data)
+
+#remove the names of the columns
+colnames(dune_format_data) <- raw_count_data$Geneid
+
+#drop the first row as now redundant
+dune_format_data <- dune_format_data[-1,]
+
+dune_format_data <- as.data.frame(dune_format_data)
+dune_format_data <- as.data.frame(sapply(dune_format_data, as.numeric))
+rownames(dune_format_data) <- colnames(subset(raw_count_data, select=-c(Geneid)))
+
+```
+
+#Step 5: Verify transposed data
+```{r}
+head(dune_format_data)
+dim(dune_format_data)
+```
+
+#Step 6: Perform perMANOVA
+```{r}
+adonis2(dune_format_data ~ treatment, data=env_data , permutations = 9999,  method = "euclidean", parallel =getOption("mc.cores", 2L) )
+```
+
+
+
+
+
+
+
+
